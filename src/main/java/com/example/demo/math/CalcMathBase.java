@@ -1,5 +1,8 @@
 package com.example.demo.math;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class CalcMathBase {
 
     public Double sum(Double numberOne, Double numberTwo) {
