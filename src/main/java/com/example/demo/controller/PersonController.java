@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.Person;
+import com.example.demo.data.vo.v1.PersonVO;
+import com.example.demo.mapper.DozerMapper;
 import com.example.demo.services.PersonServices;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,49 +19,44 @@ public class PersonController {
         this.services = services;
     }
 
-    @RequestMapping(
+    @GetMapping(
             value = "/{id}",
-            method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person findById(@PathVariable(value = "id") String id
+    public PersonVO findById(@PathVariable(value = "id") Long id
     ) {
         return services.findById(id);
     }
 
-    @RequestMapping(
-            method = RequestMethod.GET,
+    @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public List<Person> findAll(String id
-    ) {
+    public List<PersonVO> findAll() {
         return services.findAll();
     }
 
-    @RequestMapping(
-            method = RequestMethod.POST,
+    @PostMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person created(@RequestBody Person person) {
-        return services.created(person);
+    public PersonVO created(@RequestBody PersonVO personVO) {
+        return services.created(personVO);
     }
 
-    @RequestMapping(
-            method = RequestMethod.PUT,
+    @PutMapping(
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public Person updated(@RequestBody Person person) {
-        return services.updated(person);
+    public PersonVO updated(@RequestBody PersonVO personVO) {
+        return services.updated(personVO);
     }
 
-    @RequestMapping(
-            value = "/{id}",
-            method = RequestMethod.DELETE
+    @DeleteMapping(
+            value = "/{id}"
     )
-    public void deleted(@PathVariable(value = "id") String id) {
+    public ResponseEntity<?> deleted(@PathVariable(value = "id") Long id) {
         services.deleted(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
